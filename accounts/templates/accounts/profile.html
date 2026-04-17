@@ -1,0 +1,88 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Profil - Furie Banque{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1><i class="bi bi-person-circle"></i> Mon Profil</h1>
+    <p>Bienvenue {{ user.first_name|default:user.username }}, voici vos informations personnelles.</p>
+</div>
+
+<div class="row profile-row">
+    <div class="col-lg-5">
+        <div class="card profile-card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-4"><i class="bi bi-card-text"></i> Informations du compte</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Nom complet :</strong> {{ user.first_name|default:"-" }} {{ user.last_name|default:"" }}</li>
+                    <li class="list-group-item"><strong>Nom d'utilisateur :</strong> {{ user.username }}</li>
+                    <li class="list-group-item"><strong>Email :</strong> {{ user.email|default:"-" }}</li>
+                    <li class="list-group-item"><strong>Téléphone :</strong> {{ user.phone_number|default:"-" }}</li>
+                    <li class="list-group-item"><strong>Date de naissance :</strong> {{ user.date_of_birth|date:'d/m/Y'|default:"-" }}</li>
+                    <li class="list-group-item"><strong>Adresse :</strong> {{ user.address|default:"-" }}</li>
+                    <li class="list-group-item"><strong>Statut :</strong> {% if user.is_active %}Actif{% else %}Inactif{% endif %}</li>
+                    <li class="list-group-item"><strong>Inscrit le :</strong> {{ user.date_joined|date:'d/m/Y H:i' }}</li>
+                </ul>
+                {% if user.id_document %}
+                <div class="mt-4">
+                    <a href="{{ user.id_document.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-file-earmark-person"></i> Voir document d'identité
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-4"><i class="bi bi-wallet2"></i> Résumé des comptes</h5>
+                <div class="mb-4">
+                    <p class="mb-1 text-muted">Comptes actifs</p>
+                    <h2>{{ accounts.count }} compte{% if accounts.count != 1 %}s{% endif %}</h2>
+                </div>
+                <div class="mb-4">
+                    <p class="mb-1 text-muted">Solde total</p>
+                    <h2>{{ total_balance|floatformat:2 }} XOF</h2>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-speedometer2"></i> Voir mes comptes
+                    </a>
+                    <a href="{% url 'atm_list' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-credit-card"></i> Nos GAB
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% if accounts %}
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-4"><i class="bi bi-card-checklist"></i> Comptes récents</h5>
+                <div class="table-responsive">
+                    <table class="table table-borderless mb-0">
+                        <thead>
+                            <tr>
+                                <th>Compte</th>
+                                <th>Type</th>
+                                <th>Solde</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for account in accounts %}
+                            <tr>
+                                <td>{{ account.account_number }}</td>
+                                <td>{{ account.get_account_type_display }}</td>
+                                <td>{{ account.balance|floatformat:2 }} XOF</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

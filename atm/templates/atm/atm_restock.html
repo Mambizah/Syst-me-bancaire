@@ -1,0 +1,130 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Recharger GAB - Furie Banque{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="transaction-header">
+            <h2><i class="bi bi-arrow-repeat"></i> Recharger le GAB</h2>
+            <div class="account-info">
+                <i class="bi bi-building"></i> {{ atm.name }} - 
+                <strong>{{ atm.city }}</strong>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-wallet2"></i> Informations du GAB</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <div class="mb-2">
+                            <label class="form-label text-muted small">Adresse</label>
+                            <p class="mb-0">{{ atm.address }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-2">
+                            <label class="form-label text-muted small">Ville</label>
+                            <p class="mb-0">{{ atm.city }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-0">
+                            <label class="form-label text-muted small">Espèces Actuelles</label>
+                            <p class="mb-0 h5 text-success">{{ atm.cash_available|floatformat:2 }} XOF</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-0">
+                            <label class="form-label text-muted small">Statut</label>
+                            <p class="mb-0">
+                                {% if atm.status == 'available' %}
+                                    <span class="badge bg-success">Disponible</span>
+                                {% elif atm.status == 'maintenance' %}
+                                    <span class="badge bg-warning">En Maintenance</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Hors Service</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-cash-coin"></i> Recharger en Espèces</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="{{ form.amount_added.id_for_label }}" class="form-label">
+                            <i class="bi bi-cash"></i> Montant à Ajouter
+                        </label>
+                        <div class="input-group">
+                            {{ form.amount_added }}
+                            <span class="input-group-text">€</span>
+                        </div>
+                        {% if form.amount_added.errors %}<div class="text-danger small mt-1">{{ form.amount_added.errors }}</div>{% endif %}
+                        <div class="form-help-text mt-2">Entrez le montant à ajouter au GAB</div>
+                    </div>
+
+                    <div class="card bg-light mb-4">
+                        <div class="card-body">
+                            <h6 class="card-title"><i class="bi bi-calculator"></i> Nouvelle Composition</h6>
+                            <p class="mb-0">
+                                Espèces actuelles: <strong>{{ atm.cash_available|floatformat:2 }} XOF</strong><br>
+                                + Montant ajouté: <strong id="amount">0,00 XOF</strong><br>
+                                = Total après: <strong id="newTotal">{{ atm.cash_available|floatformat:2 }} XOF</strong>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg flex-grow-1">
+                            <i class="bi bi-check-circle"></i> Confirmer le Rechargement
+                        </button>
+                        <a href="{% url 'atm_list' %}" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-x-circle"></i> Annuler
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-shield-check"></i> Sécurité du Rechargement</h5>
+                <ul class="mb-0">
+                    <li>Seules les personnes autorisées peuvent recharger</li>
+                    <li>Chaque rechargement est enregistré</li>
+                    <li>Signature numérique requise</li>
+                    <li>Audit complet conservé</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const amountInput = document.querySelector('input[name="amount_added"]');
+    const amountDisplay = document.getElementById('amount');
+    const totalDisplay = document.getElementById('newTotal');
+    const currentCash = {{ atm.cash_available }};
+
+    amountInput.addEventListener('input', function() {
+        const amount = parseFloat(this.value) || 0;
+        amountDisplay.textContent = amount.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+        totalDisplay.textContent = (currentCash + amount).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    });
+});
+</script>
+{% endblock %}

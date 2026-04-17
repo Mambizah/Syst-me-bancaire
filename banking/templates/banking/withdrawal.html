@@ -1,0 +1,69 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Retrait - Furie Banque{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="transaction-header">
+            <h2><i class="bi bi-arrow-bar-left"></i> Effectuer un Retrait</h2>
+            <div class="account-info">
+                Compte: <strong>{{ account.account_number }}</strong> | 
+                Solde: <strong>{{ account.balance|floatformat:2 }} XOF</strong>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i> 
+                    <strong>Attention:</strong> Assurez-vous d'avoir un solde suffisant.
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="{{ form.amount.id_for_label }}" class="form-label">
+                            <i class="bi bi-cash"></i> Montant à Retirer
+                        </label>
+                        <div class="input-group">
+                            {{ form.amount }}
+                            <span class="input-group-text">€</span>
+                        </div>
+                        {% if form.amount.errors %}<div class="text-danger small mt-1">{{ form.amount.errors }}</div>{% endif %}
+                        <div class="form-help-text mt-2">
+                            Montant maximum disponible: <strong>{{ account.balance|floatformat:2 }} XOF</strong>
+                        </div>
+                    </div>
+
+                    <div class="progress mb-4">
+                        <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                            Solde disponible
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-warning btn-lg flex-grow-1">
+                            <i class="bi bi-check-circle"></i> Confirmer le Retrait
+                        </button>
+                        <a href="{% url 'account_detail' account.id %}" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-x-circle"></i> Annuler
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-info-circle"></i> Limites de Retrait</h5>
+                <ul class="mb-0">
+                    <li>Retrait maximum: 500 XOF par transaction</li>
+                    <li>Limites quotidiennes appliquées</li>
+                    <li>Frais: Gratuit</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

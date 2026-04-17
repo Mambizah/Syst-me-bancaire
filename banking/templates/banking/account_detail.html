@@ -1,0 +1,80 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Détail du Compte - Furie Banque{% endblock %}
+
+{% block content %}
+<div class="transaction-header">
+    <h2><i class="bi bi-credit-card"></i> Détail du Compte</h2>
+    <div class="account-info">
+        <i class="bi bi-info-circle"></i> {{ account.account_number }} - 
+        <strong>{{ account.get_account_type_display }}</strong>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4 class="mb-0"><i class="bi bi-wallet2"></i> Solde Actuel</h4>
+    </div>
+    <div class="card-body text-center py-5">
+        <div class="balance" style="font-size: 3.5rem;">{{ account.balance|floatformat:2 }} XOF</div>
+        <p class="text-muted mt-3">Compte à jour</p>
+        <div class="d-flex gap-2 justify-content-center flex-wrap mt-4">
+            <a href="{% url 'deposit' account.id %}" class="btn btn-success btn-lg">
+                <i class="bi bi-cash-coin"></i> Dépôt
+            </a>
+            <a href="{% url 'withdrawal' account.id %}" class="btn btn-warning btn-lg">
+                <i class="bi bi-arrow-bar-left"></i> Retrait
+            </a>
+            <a href="{% url 'transfer' account.id %}" class="btn btn-info btn-lg">
+                <i class="bi bi-arrow-left-right"></i> Virement
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary btn-lg">
+                <i class="bi bi-house"></i> Retour
+            </a>
+        </div>
+    </div>
+</div>
+
+<h3 class="mb-3"><i class="bi bi-clock-history"></i> Dernières Transactions</h3>
+<div class="card">
+    {% if transactions %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th><i class="bi bi-calendar"></i> Date</th>
+                        <th><i class="bi bi-type"></i> Type</th>
+                        <th><i class="bi bi-cash"></i> Montant</th>
+                        <th><i class="bi bi-wallet"></i> Solde Après</th>
+                        <th><i class="bi bi-hash"></i> Référence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.timestamp|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            {% if transaction.transaction_type == 'deposit' %}
+                                <span class="badge bg-success"><i class="bi bi-arrow-down"></i> Dépôt</span>
+                            {% elif transaction.transaction_type == 'withdrawal' %}
+                                <span class="badge bg-warning"><i class="bi bi-arrow-up"></i> Retrait</span>
+                            {% else %}
+                                <span class="badge bg-info"><i class="bi bi-arrow-left-right"></i> Virement</span>
+                            {% endif %}
+                        </td>
+                        <td><strong>{{ transaction.amount|floatformat:2 }} XOF</strong></td>
+                        <td class="text-success"><strong>{{ transaction.balance_after|floatformat:2 }} XOF</strong></td>
+                        <td><code>{{ transaction.reference }}</code></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="card-body text-center py-5">
+            <i class="bi bi-inbox" style="font-size: 2rem; color: #6B7280;"></i>
+            <p class="mt-3 text-muted">Aucune transaction pour le moment</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: systeme-bancaire
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn banking_system.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true        # Render génère automatiquement une clé sécurisée
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: systeme-bancaire-db
+          property: connectionString
+
+databases:
+  - name: systeme-bancaire-db
+    databaseName: banking_db
+    user: banking_user
+    plan: free

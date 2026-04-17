@@ -1,0 +1,955 @@
+/* ===== ROOT VARIABLES ===== */
+:root {
+    --primary: #0052CC;
+    --primary-dark: #003BA3;
+    --secondary: #FFD700;
+    --accent: #00D4FF;
+    --success: #10B981;
+    --danger: #EF4444;
+    --warning: #F59E0B;
+    --dark: #1F2937;
+    --light: #F9FAFB;
+    --white: #FFFFFF;
+    --text: #111827;
+    --text-light: #6B7280;
+    --border: #E5E7EB;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== GLOBAL STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    background-attachment: fixed;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(0, 212, 255, 0);
+    }
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    box-shadow: var(--shadow);
+    padding: 1.2rem 0;
+    animation: slideDown 0.6s ease-out;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--secondary) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    position: relative;
+}
+
+.navbar-nav .nav-link::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background: var(--secondary);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::before {
+    width: 80%;
+}
+
+.navbar-nav .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--secondary) !important;
+    transform: translateY(-2px);
+}
+
+/* ===== ALERTS ===== */
+.alert {
+    border: none;
+    border-radius: 10px;
+    animation: slideUp 0.5s ease-out;
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border-left-color: var(--success);
+    color: #155724;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    border-left-color: var(--danger);
+    color: #721c24;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+    border-left-color: var(--warning);
+    color: #856404;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    border-left-color: var(--accent);
+    color: #0c5460;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* ===== CARDS ===== */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    animation: slideUp 0.6s ease-out;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    border: none;
+    padding: 1.5rem;
+    font-weight: 600;
+}
+
+.card-header h3,
+.card-header h4,
+.card-header h5 {
+    margin: 0;
+    color: var(--secondary);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* ===== ACCOUNT CARDS ===== */
+.account-card {
+    background: linear-gradient(135deg, var(--white) 0%, #f8f9fa 100%);
+    border-left: 5px solid var(--primary);
+    transition: all 0.3s ease;
+}
+
+.account-card:hover {
+    background: linear-gradient(135deg, #f8f9fa 0%, var(--white) 100%);
+    border-left-color: var(--secondary);
+    transform: translateX(5px);
+}
+
+.account-type {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.account-number {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+.balance {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 1rem 0;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--white) !important;
+    box-shadow: 0 4px 15px rgba(0, 82, 204, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 82, 204, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+    color: var(--white) !important;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-success:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--warning) 0%, #D97706 100%);
+    color: var(--white) !important;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.btn-warning:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, var(--accent) 0%, #06B6D4 100%);
+    color: var(--white) !important;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.btn-info:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%);
+    color: var(--white) !important;
+    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(107, 114, 128, 0.4);
+}
+
+.btn-lg {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ===== FORMS ===== */
+.form-label {
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.7rem;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--white);
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.1);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: var(--text-light);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Input spinbutton */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* ===== HEADINGS ===== */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text);
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+h5 {
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+}
+
+/* ===== TABLES ===== */
+.table {
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+.table thead {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    font-weight: 600;
+}
+
+.table thead th {
+    border: none;
+    padding: 1.25rem;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody td {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background: rgba(0, 82, 204, 0.05);
+    transform: scale(1.01);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard-header {
+    text-align: center;
+    padding: 2rem 0;
+    margin-bottom: 3rem;
+}
+
+.dashboard-header h1 {
+    font-size: 3rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    animation: slideDown 0.8s ease-out;
+}
+
+.dashboard-header p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    animation: slideDown 0.9s ease-out;
+}
+
+.accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* ===== LOGIN PAGE ===== */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    animation: slideUp 0.7s ease-out;
+}
+
+.login-card .card-header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+}
+
+.login-card .card-header h3 {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--secondary);
+}
+
+.login-form {
+    padding: 2rem;
+}
+
+.login-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* ===== REGISTER PAGE ===== */
+.register-section {
+    background: #eef4ff;
+    min-height: calc(100vh - 120px);
+    padding: 4.5rem 0;
+}
+
+.register-card {
+    max-width: 1040px;
+    margin: 0 auto;
+    animation: slideUp 0.7s ease-out;
+}
+
+.register-card .row {
+    min-height: 100%;
+}
+
+.register-panel {
+    min-height: 100%;
+    background: linear-gradient(150deg, rgba(0, 82, 204, 1) 0%, rgba(0, 119, 255, 0.95) 100%);
+    color: #ffffff;
+}
+
+.register-panel .badge-soft-light {
+    color: #0b2f61;
+    background: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    display: inline-block;
+}
+
+.register-panel h2 {
+    font-size: 2.2rem;
+    line-height: 1.1;
+    font-weight: 700;
+}
+
+.register-panel p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.register-feature {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.register-feature h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.register-feature p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.feature-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    font-size: 1.25rem;
+    background: #ffffff;
+    color: #0052cc;
+}
+
+.register-form {
+    padding: 0;
+}
+
+.register-form .form-label {
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.register-form input.form-control,
+.register-form textarea.form-control,
+.register-form select.form-control {
+    border-radius: 14px;
+    padding: 1rem 1rem;
+    border: 1px solid rgba(0, 82, 204, 0.18);
+    background: #f8fbff;
+}
+
+.register-form input.form-control:focus,
+.register-form textarea.form-control:focus,
+.register-form select.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 82, 204, 0.15);
+    border-color: #0052cc;
+}
+
+.register-form .btn-primary {
+    background: #004bbd;
+    border-color: #004bbd;
+    border-radius: 12px;
+    padding: 0.95rem 1.4rem;
+    font-weight: 600;
+}
+
+.register-form .btn-primary:hover {
+    background: #0039a6;
+    border-color: #0039a6;
+}
+
+.form-help-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 991.98px) {
+    .register-card {
+        max-width: 100%;
+    }
+
+    .register-panel {
+        padding: 2.5rem 1.75rem;
+    }
+
+    .register-panel {
+        min-height: auto;
+    }
+
+    .register-section {
+        min-height: auto;
+        padding: 3rem 0;
+    }
+}
+
+/* ===== NEW AUTH PAGES ===== */
+.register-form-input,
+.login-form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: #e7e8e9;
+    border: none;
+    outline: none;
+    color: #191c1d;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+}
+
+.register-form-input:focus,
+.login-form-input:focus {
+    box-shadow: 0 0 0 2px rgba(0, 106, 106, 0.2);
+}
+
+.register-form-input::placeholder,
+.login-form-input::placeholder {
+    color: #747781;
+}
+
+/* Textarea styling */
+.register-form-input[rows] {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* File input styling */
+.register-form-input[type="file"] {
+    padding: 0.5rem 1rem;
+    background: #f8f9fa;
+    cursor: pointer;
+}
+
+.register-form-input[type="file"]:focus {
+    background: #e7e8e9;
+}
+
+/* ===== TRANSACTION PAGE ===== */
+.transaction-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    animation: slideDown 0.6s ease-out;
+}
+
+.transaction-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--secondary);
+}
+
+.transaction-header .account-info {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+}
+
+/* ===== ATM PAGE ===== */
+.atm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.atm-card {
+    background: linear-gradient(135deg, var(--white) 0%, #f8f9fa 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    animation: slideUp 0.6s ease-out;
+}
+
+.atm-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.atm-card-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: var(--white);
+    padding: 1.5rem;
+}
+
+.atm-card-header h5 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.atm-card-location {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+}
+
+.atm-status {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.atm-status.available {
+    background: rgba(16, 185, 129, 0.2);
+    color: #065f46;
+}
+
+.atm-status.maintenance {
+    background: rgba(245, 158, 11, 0.2);
+    color: #78350f;
+}
+
+.atm-status.out-of-service {
+    background: rgba(239, 68, 68, 0.2);
+    color: #7f1d1d;
+}
+
+.atm-card-body {
+    padding: 1.5rem;
+}
+
+.atm-info {
+    margin-bottom: 1rem;
+}
+
+.atm-info-label {
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+}
+
+.atm-info-value {
+    font-size: 1.1rem;
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 0;
+    }
+
+    .navbar-brand {
+        font-size: 1.4rem;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 0.9rem;
+        margin: 0.3rem 0.2rem;
+        padding: 0.5rem 0.8rem !important;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    .balance {
+        font-size: 2rem;
+    }
+
+    .accounts-grid,
+    .atm-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header {
+        padding: 1.5rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .login-card,
+    .register-card {
+        max-width: 100%;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem;
+    margin-top: 4rem;
+    box-shadow: var(--shadow);
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+/* ===== UTILITIES ===== */
+.text-success {
+    color: var(--success) !important;
+}
+
+.text-danger {
+    color: var(--danger) !important;
+}
+
+.text-warning {
+    color: var(--warning) !important;
+}
+
+.text-muted {
+    color: var(--text-light) !important;
+}
+
+.mb-4 {
+    margin-bottom: 2rem;
+}
+
+.mt-4 {
+    margin-top: 2rem;
+}
+
+.py-5 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+/* Load animation */
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.slide-up {
+    animation: slideUp 0.6s ease-out;
+}
+
+.slide-down {
+    animation: slideDown 0.6s ease-out;
+}
+
+/* Smooth transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}

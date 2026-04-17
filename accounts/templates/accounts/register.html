@@ -1,0 +1,381 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Inscription - Furie Banque{% endblock %}
+
+{% block content %}
+<style>
+.register-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+    background: rgba(248, 249, 250, 0.8);
+    backdrop-filter: blur(12px);
+}
+.register-main {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+.register-form-card {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 82, 204, 0.1);
+}
+.register-benefits-card {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.register-benefits-card img {
+    width: 100%;
+    height: 16rem;
+    object-fit: cover;
+}
+.register-benefits-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 82, 204, 0.8), transparent);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+}
+.register-feature-card {
+    background: #edeeef;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border-left: 4px solid #006a6a;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+.register-feature-card:nth-child(2) {
+    border-left-color: #e9c176;
+}
+.register-feature-card:nth-child(3) {
+    border-left-color: #0052cc;
+}
+.register-stepper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.register-step {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.register-step-circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: #0052cc;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.register-step.inactive .register-step-circle {
+    background: #e1e3e4;
+    color: #191c1d;
+}
+.register-step.inactive {
+    opacity: 0.4;
+}
+.register-step-line {
+    height: 1px;
+    width: 2rem;
+    background: rgba(196, 198, 209, 0.3);
+}
+.register-form-group {
+    margin-bottom: 1.5rem;
+}
+.register-form-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #43474f;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+.register-form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: #e7e8e9;
+    border: none;
+    outline: none;
+    color: #191c1d;
+    transition: all 0.2s;
+}
+.register-form-input:focus {
+    box-shadow: 0 0 0 2px rgba(0, 106, 106, 0.2);
+}
+.register-form-input::placeholder {
+    color: #747781;
+}
+.register-trust-badges {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    opacity: 0.4;
+    margin-top: 1rem;
+}
+.register-trust-badge {
+    font-size: 0.625rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+}
+.register-feature-icon {
+    background: rgba(144, 238, 239, 0.3);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+.register-feature-icon:nth-child(2) {
+    background: rgba(233, 193, 118, 0.2);
+}
+.register-feature-icon:nth-child(3) {
+    background: rgba(213, 227, 255, 0.3);
+}
+@media (max-width: 991px) {
+    .register-main {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .register-trust-badges {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+</style>
+
+<!-- Hide navbar for this page -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) navbar.style.display = 'none';
+});
+</script>
+
+<header class="register-header">
+    <div class="d-flex justify-content-between align-items-center px-4 py-4" style="max-width: 1280px; margin: 0 auto;">
+        <div class="fw-bold fs-5 text-primary" style="letter-spacing: -0.025em;">Furie Banque</div>
+        <div class="d-flex align-items-center gap-3">
+            <span class="text-uppercase fw-semibold text-muted" style="font-size: 0.625rem; letter-spacing: 0.1em;">Inscription Sécurisée</span>
+            <i class="bi bi-shield-check-fill text-success"></i>
+        </div>
+    </div>
+</header>
+
+<main class="register-main">
+    <div class="row g-5">
+        <!-- Registration Form Section -->
+        <div class="col-lg-7">
+            <div class="mb-4">
+                <h1 class="display-4 fw-bold text-primary mb-2" style="letter-spacing: -0.025em;">Ouvrez votre compte</h1>
+                <p class="text-muted">Commencez votre parcours avec Furie Banque en quelques minutes.</p>
+            </div>
+
+            <!-- Stepper Indicator -->
+            <div class="register-stepper">
+                <div class="register-step">
+                    <div class="register-step-circle">1</div>
+                    <span class="fw-semibold text-primary" style="font-size: 0.875rem;">Informations Personnelles</span>
+                </div>
+                <div class="register-step-line"></div>
+                <div class="register-step inactive">
+                    <div class="register-step-circle">2</div>
+                    <span class="fw-semibold" style="font-size: 0.875rem;">Sécurité & Identifiants</span>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="register-form-card">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Informations Personnelles -->
+                    <div class="mb-4">
+                        <h4 class="fw-bold text-primary mb-3" style="font-size: 1.1rem;">Informations Personnelles</h4>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="register-form-group">
+                                    <label class="register-form-label">Prénom</label>
+                                    <input type="text" name="first_name" class="register-form-input" placeholder="Votre prénom" value="{{ form.first_name.value|default:'' }}" required>
+                                    {% if form.first_name.errors %}<div class="text-danger small mt-1">{{ form.first_name.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="register-form-group">
+                                    <label class="register-form-label">Nom</label>
+                                    <input type="text" name="last_name" class="register-form-input" placeholder="Votre nom" value="{{ form.last_name.value|default:'' }}" required>
+                                    {% if form.last_name.errors %}<div class="text-danger small mt-1">{{ form.last_name.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="register-form-group mb-3">
+                            <label class="register-form-label">Nom d'utilisateur</label>
+                            <input type="text" name="username" class="register-form-input" placeholder="Choisissez un nom d'utilisateur" value="{{ form.username.value|default:'' }}" required>
+                            <div class="form-text small text-muted mt-1">{{ form.username.help_text|safe }}</div>
+                            {% if form.username.errors %}<div class="text-danger small mt-1">{{ form.username.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="register-form-group mb-3">
+                            <label class="register-form-label">Email</label>
+                            <input type="email" name="email" class="register-form-input" placeholder="votre.email@exemple.com" value="{{ form.email.value|default:'' }}" required>
+                            {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="register-form-group">
+                                    <label class="register-form-label">Téléphone</label>
+                                    <input type="tel" name="phone_number" class="register-form-input" placeholder="+228 XX XX XX XX" value="{{ form.phone_number.value|default:'' }}" required>
+                                    {% if form.phone_number.errors %}<div class="text-danger small mt-1">{{ form.phone_number.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="register-form-group">
+                                    <label class="register-form-label">Date de naissance</label>
+                                    <input type="date" name="date_of_birth" class="register-form-input" value="{{ form.date_of_birth.value|default:'' }}" required>
+                                    {% if form.date_of_birth.errors %}<div class="text-danger small mt-1">{{ form.date_of_birth.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="register-form-group">
+                            <label class="register-form-label">Adresse complète</label>
+                            <textarea name="address" class="register-form-input" rows="3" placeholder="Votre adresse complète" required>{{ form.address.value|default:'' }}</textarea>
+                            {% if form.address.errors %}<div class="text-danger small mt-1">{{ form.address.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Document d'identité -->
+                    <div class="mb-4">
+                        <h4 class="fw-bold text-primary mb-3" style="font-size: 1.1rem;">Pièce d'identité</h4>
+                        <div class="register-form-group">
+                            <label class="register-form-label">Document d'identité</label>
+                            <input type="file" name="id_document" class="register-form-input" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <div class="form-text small text-muted mt-1">{{ form.id_document.help_text }}</div>
+                            {% if form.id_document.errors %}<div class="text-danger small mt-1">{{ form.id_document.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Sécurité -->
+                    <div class="mb-4">
+                        <h4 class="fw-bold text-primary mb-3" style="font-size: 1.1rem;">Sécurité du compte</h4>
+
+                        <div class="register-form-group mb-3">
+                            <label class="register-form-label">Mot de passe</label>
+                            <input type="password" name="password1" class="register-form-input" placeholder="Créez un mot de passe sécurisé" required>
+                            <div class="form-text small text-muted mt-1">
+                                <div class="mb-1">Votre mot de passe doit contenir :</div>
+                                <ul class="mb-0 ps-3 small">
+                                    <li>Au minimum 8 caractères</li>
+                                    <li>Ne pas trop ressembler à vos autres informations personnelles</li>
+                                    <li>Ne pas être un mot de passe couramment utilisé</li>
+                                    <li>Ne pas être entièrement numérique</li>
+                                </ul>
+                            </div>
+                            {% if form.password1.errors %}<div class="text-danger small mt-1">{{ form.password1.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="register-form-group">
+                            <label class="register-form-label">Confirmer le mot de passe</label>
+                            <input type="password" name="password2" class="register-form-input" placeholder="Confirmez votre mot de passe" required>
+                            {% if form.password2.errors %}<div class="text-danger small mt-1">{{ form.password2.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center pt-4 border-top">
+                        <button type="button" class="btn btn-outline-primary px-4 py-2" onclick="window.history.back()">
+                            <i class="bi bi-arrow-left me-2"></i>Annuler
+                        </button>
+                        <button type="submit" class="btn btn-primary px-5 py-2 fw-bold d-flex align-items-center gap-2">
+                            Créer mon compte
+                            <i class="bi bi-check-circle"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sidebar / Benefits Section -->
+        <div class="col-lg-5">
+            <!-- Decorative Image Card -->
+            <div class="register-benefits-card position-relative mb-4">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bâtiment bancaire moderne">
+                <div class="register-benefits-overlay">
+                    <span class="text-warning fw-bold text-uppercase" style="font-size: 0.625rem; letter-spacing: 0.1em;">Le Coffre Numérique</span>
+                    <h3 class="text-white fw-bold mb-0" style="font-size: 1.25rem;">Sécurité Intransigeante</h3>
+                </div>
+            </div>
+
+            <!-- Security Features -->
+            <div class="d-flex flex-column gap-3">
+                <div class="register-feature-card">
+                    <div class="register-feature-icon">
+                        <i class="bi bi-lock-fill text-success"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-primary mb-1" style="font-size: 0.875rem;">Chiffrement 256-bit</h5>
+                        <p class="text-muted small mb-0">Vos données sont protégées par des protocoles cryptographiques de pointe.</p>
+                    </div>
+                </div>
+
+                <div class="register-feature-card">
+                    <div class="register-feature-icon">
+                        <i class="bi bi-shield-check text-warning"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-primary mb-1" style="font-size: 0.875rem;">Protection FDIC</h5>
+                        <p class="text-muted small mb-0">Vos dépôts sont assurés jusqu'à 250 000€ par catégorie de propriété.</p>
+                    </div>
+                </div>
+
+                <div class="register-feature-card">
+                    <div class="register-feature-icon">
+                        <i class="bi bi-fingerprint text-primary"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-primary mb-1" style="font-size: 0.875rem;">Vérification Sécurisée</h5>
+                        <p class="text-muted small mb-0">Contrôles d'identité utilisant l'analyse biométrique multi-niveaux.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="register-trust-badges">
+                <span class="register-trust-badge">ISO 27001 CERTIFIÉ</span>
+                <span class="register-trust-badge">SOC2 CONFORME</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-100 border-top mt-5" style="border-color: rgba(203, 213, 225, 0.15) !important; background: #f8f9fa;">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center px-4 py-4 gap-3" style="max-width: 1280px; margin: 0 auto;">
+        <p class="small text-muted mb-0">© 2026 Furie Banque. Tous droits réservés.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="#" class="small text-muted text-decoration-none">Politique de Confidentialité</a>
+            <a href="#" class="small text-muted text-decoration-none">Garantie de Sécurité</a>
+            <a href="#" class="small text-muted text-decoration-none">Conditions d'Utilisation</a>
+            <a href="#" class="small text-muted text-decoration-none">Paramètres Cookies</a>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
