@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from core import views
 
+admin.site.site_header = 'Système bancaire'
+admin.site.site_title = 'Admin Système bancaire'
+admin.site.index_title = 'Tableau de bord'
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('admin/', admin.site.urls),

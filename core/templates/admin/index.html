@@ -1,0 +1,25 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="admin-dashboard-hero">
+    <h1>Bienvenue dans l’administration du Système bancaire</h1>
+    <p>Suivez vos comptes, vos distributeurs et vos clients depuis un seul endroit.</p>
+</div>
+<div class="admin-dashboard-cards">
+    <div class="dashboard-card">
+        <h2>Liens rapides</h2>
+        <ul>
+            <li><a href="{% url 'admin:accounts_customuser_changelist' %}">Gérer les utilisateurs</a></li>
+            <li><a href="{% url 'admin:accounts_customerprofile_changelist' %}">Profils clients</a></li>
+            <li><a href="{% url 'admin:banking_bankaccount_changelist' %}">Comptes bancaires</a></li>
+            <li><a href="{% url 'admin:atm_atm_changelist' %}">ATMs</a></li>
+        </ul>
+    </div>
+    <div class="dashboard-card dashboard-card--info">
+        <h2>Astuce</h2>
+        <p>Utilisez les filtres et la recherche pour retrouver rapidement un compte ou un distributeur.</p>
+    </div>
+</div>
+{{ block.super }}
+{% endblock %}

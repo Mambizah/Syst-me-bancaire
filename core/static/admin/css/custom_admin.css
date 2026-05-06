@@ -1,0 +1,16 @@
+.jazzmin-navbar {
+    background: linear-gradient(135deg, #0f3d6b 0%, #2565a6 100%) !important;
+}
+.jazzmin-sidebar {
+    background: #0f2f52 !important;
+}
+.jazzmin-sidebar a, .jazzmin-sidebar .nav-link {
+    color: #e8f3ff !important;
+}
+.jazzmin-footer {
+    background: #0d2b4c !important;
+    color: #d8e9ff !important;
+}
+.jazzmin-logo {
+    color: #ffffff !important;
+}

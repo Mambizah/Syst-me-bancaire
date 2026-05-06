@@ -16,6 +16,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Application definition
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -27,6 +28,41 @@ INSTALLED_APPS = [
     'atm',
     'core',
 ]
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'Système Bancaire Admin',
+    'site_header': 'Furie Banque Admin',
+    'site_brand': 'Furie Banque',
+    'welcome_sign': 'Bienvenue dans l’administration Furie Banque',
+    'copyright': 'Furie Banque © 2026',
+    'search_model': 'auth.User',
+    'user_avatar': 'user-astronaut',
+    'show_sidebar': True,
+    'navigation_expanded': True,
+    'topmenu_links': [
+        {'name': 'Accueil', 'url': '/', 'permissions': ['auth.view_user']},
+        {'model': 'auth.user'},
+    ],
+    'icons': {
+        'auth': 'fas fa-users-cog',
+        'accounts': 'fas fa-user',
+        'banking': 'fas fa-wallet',
+        'atm': 'fas fa-building-columns',
+    },
+    'custom_css': 'admin/css/custom_admin.css',
+}
+
+JAZZMIN_UI_TWEAKS = {
+    'navbar_small_text': False,
+    'body_small_text': False,
+    'brand_small_text': False,
+    'accent': 'accent-teal',
+    'navbar': 'navbar-dark',
+    'no_navbar_border': False,
+    'footer_small_text': False,
+    'button_small_text': False,
+    'button_radius': 5,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
